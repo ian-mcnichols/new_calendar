@@ -56,7 +56,8 @@ def get_lua_day(today=datetime.datetime.now()):
                                               new_moon.hour, new_moon.minute, new_moon.second)
         print("New moon date:", date_str, "new month name:", this_month)
     print("====================\n\n")
-    print("Current month:", this_month)
+    days_since_start = today - new_moons_since[i]
+    print("Current date: {} of {}".format(days_since_start.days + 1, this_month))
     next_moon = ephem.next_new_moon(datetime.datetime.now()).datetime()
     next_moon = next_moon.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
     print("Next new moon: {}/{}/{} {}:{}:{}".format(next_moon.month, next_moon.day, next_moon.year,
