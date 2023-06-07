@@ -23,6 +23,11 @@ def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moo
 
 
 def get_lua_day(today=datetime.datetime.now()):
+    """Calculates the current Lua month for a given day, and all months previous.
+
+    :param today: Defaults to the current time. Can be any datetime object after 2016/11
+    :return: None
+    """
     lua_months = ["1", "2", "3", "4", "5", "6", "7",
                    "8", "9", "10", "11", "12", "0"]
     lua_months = ["Wyrm", "Dance", "Milk", "Mead", "Wrath", "Dim", "Moth",
