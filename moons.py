@@ -2,6 +2,7 @@ import datetime
 import ephem
 from typing import List, Tuple
 
+
 def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moon_type="full") -> List[Tuple[ephem.Date, str]]:
     """Returns a list of the full moons in a year."""
     moons=[]
@@ -18,11 +19,10 @@ def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moo
           date=ephem.next_new_moon(date)
         if date.datetime() < end:
             moons.append(date.datetime())
-
     return moons
 
 
-def get_lua_day():
+def get_lua_day(today=datetime.datetime.now()):
     lua_months = ["1", "2", "3", "4", "5", "6", "7",
                    "8", "9", "10", "11", "12", "0"]
     lua_months = ["Wyrm", "Dance", "Milk", "Mead", "Wrath", "Dim", "Moth",
@@ -30,12 +30,14 @@ def get_lua_day():
 
     start_day = datetime.datetime(2016, 11, 14)
     index = 7
-    today = datetime.datetime.now()
     new_moons_since = get_moons_in_timeframe(start=start_day, end=today, moon_type="new")
 
     print(new_moons_since)
     years_since = 0
     ly_list = [2, 5, 7, 10, 13, 16, 18]
+    if len(new_moons_since) <= 0:
+        print("Error! It's been 0 or fewer new moons since 2016??")
+        return
     for i in range(len(new_moons_since)):
         index += 1
         if index == 12 and years_since not in ly_list:
@@ -62,4 +64,5 @@ def get_lua_day():
     next_month = lua_months[index]
     print("Next month: ", next_month)
 
-get_lua_day()
+random_future_day = datetime.datetime(2035,12,3)
+get_lua_day(random_future_day)
