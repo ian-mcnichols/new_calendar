@@ -25,8 +25,8 @@ def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moo
 def get_lua_day():
     lua_months = ["1", "2", "3", "4", "5", "6", "7",
                    "8", "9", "10", "11", "12", "0"]
-    lua_months = ["wyrm", "dance", "milk", "mead", "wrath", "dim", "moth",
-                   "blood", "veil", "blooming", "memory", "bane", "wake"]
+    lua_months = ["Wyrm", "Dance", "Milk", "Mead", "Wrath", "Dim", "Moth",
+                   "Blood", "Veil", "Blooming", "Memory", "Bane", "Wake"]
 
     start_day = datetime.datetime(2016, 11, 14)
     index = 7
@@ -51,6 +51,15 @@ def get_lua_day():
         date_str = "{}/{}/{} {}:{}:{}".format(new_moon.month, new_moon.day, new_moon.year,
                                               new_moon.hour, new_moon.minute, new_moon.second)
         print("New moon date:", date_str, "new month name:", this_month)
+    print("====================\n\n")
     print("Current month:", this_month)
+    print("Next new moon: ", ephem.next_new_moon(datetime.datetime.now()))
+    index += 1
+    if index == 12 and years_since not in ly_list:
+        index = 0
+    if index == 13:
+        index = 0
+    next_month = lua_months[index]
+    print("Next month: ", next_month)
 
 get_lua_day()
