@@ -32,16 +32,25 @@ class Calendar():
 
             # Add the days (good lord there must be a better way)
             can.setFontSize(13)
-            for i in range(6):
-                can.drawString(105+(i*100), 485, str(i+1))
-            for i in range(6):
-                can.drawString(105+(i*100), 410, str(i+7))
-            for i in range(6):
-                can.drawString(105+(i*100), 335, str(i+13))
-            for i in range(6):
-                can.drawString(105+(i*100), 260, str(i+20))
-            for i in range(3):
-                can.drawString(105+(i*100), 185, str(i+27))
+            for day in range(6):
+                can.drawString(105+(day*100), 485, str(day+1))
+            for day in range(6):
+                can.drawString(105+(day*100), 410, str(day+7))
+            for day in range(6):
+                can.drawString(105+(day*100), 335, str(day+13))
+            for day in range(6):
+                can.drawString(105+(day*100), 260, str(day+20))
+            for day in range(3):
+                can.drawString(105+(day*100), 185, str(day+27))
+
+            # Add the full moon
+            # x = 105+(day*100) y = 335
+            fullmoon_info = info_dict[i][2]
+            fullmoon_d = int(fullmoon_info.split(" ")[0]) - 13
+            can.setFont("Helvetica",15)
+            can.drawString(105+(fullmoon_d*100), 320, "Full Moon")
+            fullmoon_hms = fullmoon_info.split(" ")[1]
+            can.drawString(105+(fullmoon_d*100), 300, fullmoon_hms)
 
 
             # Skip to next page

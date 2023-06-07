@@ -63,10 +63,11 @@ def get_lua_day(today=datetime.datetime.now()):
         if i < len(new_moons_since) - 1:
             full_moon_greg = ephem.next_full_moon(new_moons_since[i]).datetime()
             full_moon_lua = new_moons_since[i+1] - full_moon_greg
-            print(full_moon_greg)
-            full_moon_lua_ref = "{} {}:{}:{}".format(full_moon_lua.days + 1, "?", "?", "?")
-            print(full_moon_lua_ref)
-            calendar_info[counter] = [this_month, date_str, full_moon_lua.days+1]
+            full_moon_greg = full_moon_greg.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
+            full_moon_lua_ref = "{} {}:{}:{}".format(full_moon_lua.days + 1, full_moon_greg.hour, full_moon_greg.minute,
+                                                     full_moon_greg.second)
+            print("Lua full moon:", full_moon_lua_ref)
+            calendar_info[counter] = [this_month, date_str, full_moon_lua_ref, full_moon_greg]
     this_calendar = Calendar("calendar.pdf", calendar_info)
     print("====================\n\n")
     days_since_start = today - new_moons_since[i]
@@ -83,8 +84,9 @@ def get_lua_day(today=datetime.datetime.now()):
     next_month = lua_months[index]
     print("Next month: ", next_month)
 
+future_date = datetime.datetime(2023, 8, 1)
 
-get_lua_day()
+get_lua_day(future_date)
 
 """info needed for calendar
 New moon date/time
