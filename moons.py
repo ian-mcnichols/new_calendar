@@ -44,6 +44,8 @@ def get_lua_day():
         if index == 13:
             index = 0
             years_since += 1
+        if years_since == 19:
+            years_since = 0
         this_month = lua_months[index]
         new_moon_datetime = new_moons_since[i]
         date_str = "{}/{}/{}".format(new_moon_datetime.month, new_moon_datetime.day, new_moon_datetime.year)
