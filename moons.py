@@ -1,8 +1,6 @@
 import datetime
 import ephem
 from typing import List, Tuple
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, landscape
 
 from calendar_creation import Calendar
 

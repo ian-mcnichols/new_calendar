@@ -1,3 +1,8 @@
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, landscape
+
+
+
 class Calendar():
     def __init__(self, filename, info_dict, **kwargs):
         self.indexes = ["month_name", "month_greg_start", "full_moon_day"]
