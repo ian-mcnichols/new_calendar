@@ -40,51 +40,53 @@ class Calendar():
             can.drawString(600, 550, first_day)
 
             # Make the calendar grid
-            can.line(100, 500, 700, 500)
-            can.line(100, 425, 700, 425)
-            can.line(100, 350, 700, 350)
-            can.line(100, 275, 700, 275)
-            can.line(100, 200, 700, 200)
+            can.line(60, 500, 740, 500)
+            can.line(60, 410, 740, 410)
+            can.line(60, 320, 740, 320)
+            can.line(60, 230, 740, 230)
+            can.line(60, 140, 740, 140)
             if total_days == 29:
-                can.line(100, 125, 400, 125)
+                can.line(60, 50, 400, 50)
             else:
-                can.line(100, 125, 500, 125)
+                can.line(60, 50, 513.3, 50)
 
-            can.line(100, 500, 100, 125)
-            can.line(200, 500, 200, 125)
-            can.line(300, 500, 300, 125)
-            can.line(400, 500, 400, 125)
+            can.line(60, 500, 60, 50)
+            can.line(173.3, 500, 173.3, 50)
+            can.line(289.6, 500, 289.6, 50)
+            can.line(400, 500, 400, 50)
             if total_days == 29:
-                can.line(500, 500, 500, 200)
+                can.line(513.3, 500, 513.3, 140)
             else:
-                can.line(500, 500, 500, 125)
-            can.line(600, 500, 600, 200)
-            can.line(700, 500, 700, 200)
+                can.line(513.3, 500, 513.3, 50)
+            can.line(626.6, 500, 626.6, 140)
+            can.line(740, 500, 740, 140)
 
             # Add the days (good lord there must be a better way)
             can.setFontSize(13)
             for day in range(6):
-                can.drawString(105+(day*100), 485, str(day+1))
+                can.drawString(65+(day*113.3), 485, str(day+1))
             for day in range(6):
-                can.drawString(105+(day*100), 410, str(day+7))
+                can.drawString(65+(day*113.3), 395, str(day+7))
             for day in range(6):
-                can.drawString(105+(day*100), 335, str(day+13))
+                can.drawString(65+(day*113.3), 300, str(day+13))
             for day in range(6):
-                can.drawString(105+(day*100), 260, str(day+20))
+                can.drawString(65+(day*113.3), 210, str(day+20))
             for day in range(3):
-                can.drawString(105+(day*100), 185, str(day+27))
+                can.drawString(65+(day*113.3), 125, str(day+27))
             if total_days == 30:
-                can.drawString(105+(3*100), 185, "30")
+                can.drawString(65+(3*113.3), 125, "30")
 
             # Add the full moon
             # x = 105+(day*100) y = 335
             fullmoon_info = info_dict[i][2]
             fullmoon_d = int(fullmoon_info.split(" ")[0]) - 13
             can.setFont("Helvetica",15)
-            can.drawString(105+(fullmoon_d*100), 320, "Full Moon")
             fullmoon_hms = fullmoon_info.split(" ")[1]
-            can.drawString(105+(fullmoon_d*100), 300, fullmoon_hms)
+            can.drawString(65+(fullmoon_d*113.3), 233, fullmoon_hms)
+            can.drawInlineImage("./imgs/full_moon_tiny.jpg", 145+(fullmoon_d*113.3), 293)
 
+            # Pretty pictures!
+            #can.drawInlineImage("./imgs/moon_phases.jpg", -100, 20)
 
             # Skip to next page
             can.showPage()
