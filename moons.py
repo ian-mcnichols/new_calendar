@@ -98,7 +98,7 @@ def create_lua_calendar(start, end):
         new_moon = new_moons_since[i].replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
         date_str = "{}/{}/{} {}:{}:{}".format(new_moon.month, new_moon.day, new_moon.year,
                                               new_moon.hour, new_moon.minute, new_moon.second)
-        if new_moons_since[i] > start_date:
+        if new_moons_since[i] > start:
             print("New moon date:", date_str, "New month name:", this_month)
         counter += 1
         # Not doing the last month:
@@ -108,7 +108,7 @@ def create_lua_calendar(start, end):
             full_moon_greg = full_moon_greg.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
             full_moon_lua_ref = "{} {}:{}:{}".format(full_moon_lua.days + 1, full_moon_greg.hour, full_moon_greg.minute,
                                                      full_moon_greg.second)
-            if new_moons_since[i] > start_date:
+            if new_moons_since[i] > start:
                 print("Lua full moon:", full_moon_lua_ref)
                 calendar_info[counter] = [this_month, date_str, full_moon_lua_ref, full_moon_greg]
     this_calendar = Calendar("calendar.pdf", calendar_info)
