@@ -47,8 +47,9 @@ def get_lua_day():
         if years_since == 19:
             years_since = 0
         this_month = lua_months[index]
-        new_moon_datetime = new_moons_since[i]
-        date_str = "{}/{}/{}".format(new_moon_datetime.month, new_moon_datetime.day, new_moon_datetime.year)
+        new_moon = new_moons_since[i]
+        date_str = "{}/{}/{} {}:{}:{}".format(new_moon.month, new_moon.day, new_moon.year,
+                                              new_moon.hour, new_moon.minute, new_moon.second)
         print("New moon date:", date_str, "new month name:", this_month)
     print("Current month:", this_month)
 
