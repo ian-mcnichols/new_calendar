@@ -115,7 +115,7 @@ def create_lua_calendar(start, end):
 
 
 if __name__ == "__main__":
-    future_date = datetime.datetime(2026, 1, 30)
+    future_date = datetime.datetime(2026, 12, 30)
     start_date = datetime.datetime(2022, 12, 20)
     create_lua_calendar(start_date, future_date)
     #today_in_lua()
