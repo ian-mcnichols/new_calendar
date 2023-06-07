@@ -24,7 +24,7 @@ def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moo
     return moons
 
 
-def get_lua_day(today=datetime.datetime.now()):
+def get_lua_day(start, end):
     """Calculates the current Lua month for a given day, and all months previous.
 
     :param today: Defaults to the current time. Can be any datetime object after 2016/11
@@ -35,7 +35,7 @@ def get_lua_day(today=datetime.datetime.now()):
     calendar_info = {}
     start_day = datetime.datetime(2016, 10, 13)
     index = 7
-    new_moons_since = get_moons_in_timeframe(start=start_day, end=today, moon_type="new")
+    new_moons_since = get_moons_in_timeframe(start=start_day, end=end, moon_type="new")
 
     years_since = 0
     ly_list = [2, 5, 7, 10, 13, 16, 18]
@@ -57,7 +57,8 @@ def get_lua_day(today=datetime.datetime.now()):
         new_moon = new_moons_since[i].replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
         date_str = "{}/{}/{} {}:{}:{}".format(new_moon.month, new_moon.day, new_moon.year,
                                               new_moon.hour, new_moon.minute, new_moon.second)
-        print("New moon date:", date_str, "new month name:", this_month)
+        if new_moons_since[i] > start_date:
+            print("New moon date:", date_str, "New month name:", this_month)
         counter += 1
         # Not doing the last month:
         if i < len(new_moons_since) - 1:
@@ -66,12 +67,13 @@ def get_lua_day(today=datetime.datetime.now()):
             full_moon_greg = full_moon_greg.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
             full_moon_lua_ref = "{} {}:{}:{}".format(full_moon_lua.days + 1, full_moon_greg.hour, full_moon_greg.minute,
                                                      full_moon_greg.second)
-            print("Lua full moon:", full_moon_lua_ref)
-            calendar_info[counter] = [this_month, date_str, full_moon_lua_ref, full_moon_greg]
+            if new_moons_since[i] > start_date:
+                print("Lua full moon:", full_moon_lua_ref)
+                calendar_info[counter] = [this_month, date_str, full_moon_lua_ref, full_moon_greg]
     this_calendar = Calendar("calendar.pdf", calendar_info)
     print("====================\n\n")
-    days_since_start = today - new_moons_since[i]
-    print("Current date: {} of {}".format(days_since_start.days + 1, this_month))
+    days_since_start = end - new_moons_since[i]
+    print("Lua date: {} of {}".format(days_since_start.days + 1, this_month))
     next_moon = ephem.next_new_moon(datetime.datetime.now()).datetime()
     next_moon = next_moon.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
     print("Next new moon: {}/{}/{} {}:{}:{}".format(next_moon.month, next_moon.day, next_moon.year,
@@ -84,9 +86,9 @@ def get_lua_day(today=datetime.datetime.now()):
     next_month = lua_months[index]
     print("Next month: ", next_month)
 
-future_date = datetime.datetime(2023, 8, 1)
-
-get_lua_day(future_date)
+future_date = datetime.datetime(2026, 1, 30)
+start_date = datetime.datetime(2022, 12, 20)
+get_lua_day(start_date, future_date)
 
 """info needed for calendar
 New moon date/time
