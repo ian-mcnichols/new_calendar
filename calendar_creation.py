@@ -33,6 +33,8 @@ class Calendar():
             can.drawString(600, 520, "- {}/{}/{}".format(last_day.month, last_day.day, last_day.year))
             can.setFont("Helvetica", 45)
             can.drawString(20, 550, info_dict[i][0])
+            can.setFontSize(15)
+            can.drawString(20, 535, info_dict[i][1])
             can.setFont("Helvetica", 25)
             first_day = info_dict[i][1].split(" ")[0]
             can.drawString(600, 550, first_day)
