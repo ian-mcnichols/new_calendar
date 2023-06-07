@@ -1,6 +1,8 @@
 import datetime
 import ephem
 from typing import List, Tuple
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, landscape
 
 
 def get_moons_in_timeframe(start=datetime.datetime.now(), end=None, years=1, moon_type="full") -> List[Tuple[ephem.Date, str]]:
@@ -30,8 +32,8 @@ def get_lua_day(today=datetime.datetime.now()):
     """
     lua_months = ["Wyrm", "Dance", "Milk", "Mead", "Wrath", "Dim", "Moth",
                    "Blood", "Veil", "Blooming", "Memory", "Bane", "Wake"]
-
-    start_day = datetime.datetime(2016, 11, 14)
+    calendar_info = {}
+    start_day = datetime.datetime(2016, 10, 13)
     index = 7
     new_moons_since = get_moons_in_timeframe(start=start_day, end=today, moon_type="new")
 
@@ -40,6 +42,7 @@ def get_lua_day(today=datetime.datetime.now()):
     if len(new_moons_since) <= 0:
         print("Error! It's been 0 or fewer new moons since 2016??")
         return
+    counter = 0
     for i in range(len(new_moons_since)):
         index += 1
         if index == 12 and years_since not in ly_list:
@@ -55,6 +58,16 @@ def get_lua_day(today=datetime.datetime.now()):
         date_str = "{}/{}/{} {}:{}:{}".format(new_moon.month, new_moon.day, new_moon.year,
                                               new_moon.hour, new_moon.minute, new_moon.second)
         print("New moon date:", date_str, "new month name:", this_month)
+        counter += 1
+        # Not doing the last month:
+        if i < len(new_moons_since) - 1:
+            full_moon_greg = ephem.next_full_moon(new_moons_since[i]).datetime()
+            full_moon_lua = new_moons_since[i+1] - full_moon_greg
+            print(full_moon_greg)
+            full_moon_lua_ref = "{} {}:{}:{}".format(full_moon_lua.days + 1, "?", "?", "?")
+            print(full_moon_lua_ref)
+            calendar_info[counter] = [this_month, date_str, full_moon_lua.days+1]
+    this_calendar = Calendar("calendar.pdf", calendar_info)
     print("====================\n\n")
     days_since_start = today - new_moons_since[i]
     print("Current date: {} of {}".format(days_since_start.days + 1, this_month))
@@ -70,4 +83,43 @@ def get_lua_day(today=datetime.datetime.now()):
     next_month = lua_months[index]
     print("Next month: ", next_month)
 
+
+class Calendar():
+    def __init__(self, filename, info_dict, **kwargs):
+        self.indexes = ["month_name", "month_greg_start", "full_moon_day"]
+        self.info_dict = info_dict
+        can = canvas.Canvas(filename, pagesize=landscape(letter))
+        for i in info_dict:
+            can.setFont("Helvetica", 45)
+            can.drawString(20, 550, info_dict[i][0])
+            can.setFont("Helvetica", 25)
+            can.drawString(600, 550, info_dict[i][1].split(" ")[0])
+
+            # Make the calendar grid
+            can.line(100, 500, 700, 500)
+            can.line(100, 425, 700, 425)
+            can.line(100, 350, 700, 350)
+            can.line(100, 275, 700, 275)
+            can.line(100, 200, 700, 200)
+            can.line(100, 125, 700, 125)
+
+            can.line(100, 500, 100, 125)
+            can.line(200, 500, 200, 125)
+            can.line(300, 500, 300, 125)
+            can.line(400, 500, 400, 125)
+            can.line(500, 500, 500, 125)
+            can.line(600, 500, 600, 125)
+            can.line(700, 500, 700, 125)
+
+
+            # Skip to next page
+            can.showPage()
+        can.save()
+
 get_lua_day()
+
+"""info needed for calendar
+New moon date/time
+Full moon date/time (of Lua month)
+Month name
+"""
