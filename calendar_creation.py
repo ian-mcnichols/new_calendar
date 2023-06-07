@@ -28,13 +28,14 @@ class Calendar():
                                              int(first_day.split("/")[1]))
             # Total days
             total_days = (last_day - first_day_dt).days + 1
-            can.drawString(100, 100, str(total_days))
 
             can.setFontSize(25)
             can.drawString(600, 520, "- {}/{}/{}".format(last_day.month, last_day.day, last_day.year))
             can.setFont("Helvetica", 45)
             can.drawString(20, 550, info_dict[i][0])
             can.setFont("Helvetica", 25)
+            first_day = info_dict[i][1].split(" ")[0]
+            can.drawString(600, 550, first_day)
 
             # Make the calendar grid
             can.line(100, 500, 700, 500)
