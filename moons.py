@@ -111,16 +111,11 @@ def create_lua_calendar(start, end):
             if new_moons_since[i] > start:
                 print("Lua full moon:", full_moon_lua_ref)
                 calendar_info[counter] = [this_month, date_str, full_moon_lua_ref, full_moon_greg]
-    this_calendar = Calendar("calendar.pdf", calendar_info)
-
-future_date = datetime.datetime(2026, 1, 30)
-start_date = datetime.datetime(2022, 12, 20)
-create_lua_calendar(start_date, future_date)
-#today_in_lua()
+    Calendar("calendar.pdf", calendar_info)
 
 
-"""info needed for calendar
-New moon date/time
-Full moon date/time (of Lua month)
-Month name
-"""
+if __name__ == "__main__":
+    future_date = datetime.datetime(2026, 1, 30)
+    start_date = datetime.datetime(2022, 12, 20)
+    create_lua_calendar(start_date, future_date)
+    #today_in_lua()
