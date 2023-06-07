@@ -28,8 +28,6 @@ def get_lua_day(today=datetime.datetime.now()):
     :param today: Defaults to the current time. Can be any datetime object after 2016/11
     :return: None
     """
-    lua_months = ["1", "2", "3", "4", "5", "6", "7",
-                   "8", "9", "10", "11", "12", "0"]
     lua_months = ["Wyrm", "Dance", "Milk", "Mead", "Wrath", "Dim", "Moth",
                    "Blood", "Veil", "Blooming", "Memory", "Bane", "Wake"]
 
@@ -37,7 +35,6 @@ def get_lua_day(today=datetime.datetime.now()):
     index = 7
     new_moons_since = get_moons_in_timeframe(start=start_day, end=today, moon_type="new")
 
-    print(new_moons_since)
     years_since = 0
     ly_list = [2, 5, 7, 10, 13, 16, 18]
     if len(new_moons_since) <= 0:
@@ -69,5 +66,4 @@ def get_lua_day(today=datetime.datetime.now()):
     next_month = lua_months[index]
     print("Next month: ", next_month)
 
-random_future_day = datetime.datetime(2035,12,3)
-get_lua_day(random_future_day)
+get_lua_day()
